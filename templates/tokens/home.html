@@ -1,0 +1,9 @@
+{% extends "tokens/base.html" %}{% block title %}QueueCare — Smart Queue{% endblock %}
+{% block content %}<main class="wrap"><section class="hero">
+<div class="hero-copy"><span class="eyebrow">Smart · Fast · Digital</span><h1>Queue<span>Care</span></h1><h2>Smart Queue &amp; Token<br>Management System</h2>
+<p>Take a digital token, track your queue in real-time, and save your valuable time.</p>
+<div class="actions"><a class="btn primary" href="{% url 'register_token' %}">Get New Token →</a><a class="btn outline" href="{% url 'live_queue' %}">Live Queue Status</a></div>
+<div class="features"><div><b>♟</b>No Waiting<br>in Lines</div><div><b>ϟ</b>Real-time<br>Updates</div><div><b>▱</b>Organized<br>Service</div><div><b>☆</b>Priority<br>Queue</div></div></div>
+<div class="reception"><div class="token-board"><div>Now Serving<strong>{% if serving %}{{ serving.token_number }}{% else %}A-024{% endif %}</strong></div><div>Next Tokens<strong>A-025<br>A-026<br>A-027</strong></div></div>
+<div class="plant">🌿</div><div class="person person-one"><i></i><b></b><em></em></div><div class="person person-two"><i></i><b></b><em></em></div><div class="person person-three"><i></i><b></b><em></em></div><div class="receptionist"><i></i><b></b></div><div class="counter"><strong>♟ QueueCare</strong></div><span class="float f1">🎟</span><span class="float f2">◷</span></div>
+</section></main>{% endblock %}

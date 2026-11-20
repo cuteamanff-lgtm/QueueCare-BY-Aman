@@ -1,0 +1,9 @@
+{% extends "tokens/base.html" %}{% block title %}Get Your Token — QueueCare{% endblock %}
+{% block content %}<main class="wrap"><div class="section-title"><h2>Get Your Token</h2><p>Register in a few seconds and track your turn.</p></div><div class="two-col">
+<form class="panel" method="post">{% csrf_token %}<h3>🎟 Visitor Registration</h3>
+<label>Full Name *</label><input name="full_name" required maxlength="120" placeholder="Enter your full name">
+<label>Mobile Number *</label><input name="mobile_number" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number">
+<label>Service *</label><select name="service">{% for service in services %}<option>{{ service }}</option>{% endfor %}</select>
+<label class="check"><input type="checkbox" name="priority"> Priority (Elderly / Emergency)</label><button class="btn primary wide">Generate Token</button></form>
+<div class="panel result">{% if token %}<div class="success-icon">✓</div><h3>Token Generated!</h3><p>Your Token Number</p><div class="big-token">{{ token.token_number }}</div>
+<div class="detail"><span>Service</span><b>{{ token.service }}</b></div><div class="detail"><span>Status</span><b>Waiting</b></div><div class="detail"><span>People Ahead</span><b>{{ people_ahead }}</b></div><div class="detail"><span>Estimated Time</span><b>~ {{ estimated_minutes }} Minutes</b></div><p class="success-note">Keep this token number for reference.</p>{% else %}<div class="ticket-icon">🎟</div><h3>Your token will appear here</h3><p>Complete the form and select Generate Token.</p>{% endif %}</div></div></main>{% endblock %}

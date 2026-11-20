@@ -1,0 +1,5 @@
+{% extends "tokens/base.html" %}{% block title %}Live Queue — QueueCare{% endblock %}
+{% block content %}<main class="wrap"><div class="section-title"><h2>◉ Live Queue Status</h2><p>Real-time token updates and current service status.</p></div>
+<div class="two-col"><div class="now-card"><span class="live-pill">● Live</span><h3>Now Serving</h3><strong>{% if serving %}{{ serving.token_number }}{% else %}A-024{% endif %}</strong><p>Service: {% if serving %}{{ serving.service }}{% else %}Certificate Verification{% endif %}</p><p>Counter: 1</p></div>
+<div class="panel"><h3>Waiting Queue (Next 5)</h3>{% for item in waiting %}<div class="queue-line"><b>{{ item.token_number }}</b><span>◷ ~ {{ forloop.counter|add:1|add:forloop.counter|add:4 }} min</span></div>{% empty %}<p>No visitors are waiting right now.</p>{% endfor %}</div></div>
+<div class="stats"><div><b>{{ waiting_count }}</b><span>People Waiting</span></div><div><b>12 min</b><span>Estimated Wait</span></div><div><b>{{ completed }}</b><span>Served Today</span></div><div><b>Live</b><span>Queue Status</span></div></div></main>{% endblock %}

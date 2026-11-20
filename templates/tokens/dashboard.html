@@ -1,0 +1,12 @@
+{% extends "tokens/base.html" %}{% block title %}Staff Dashboard — QueueCare{% endblock %}
+{% block content %}<main class="dashboard-wrap"><aside class="sidebar"><h2>♟ QueueCare</h2><small>Staff Panel</small><div class="side-active">⌂ Dashboard</div><div>☷ Queue Management</div><div>◷ Token History</div><div>▥ Statistics</div><div>⚙ Settings</div><a href="{% url 'staff_logout' %}">⇥ Logout</a></aside>
+<section class="dash-main"><div class="dash-head"><h1>Dashboard</h1><span>Staff: {{ request.user.username }}</span></div>
+<div class="dash-stats"><div class="purple"><b>{% if serving %}{{ serving.token_number }}{% else %}—{% endif %}</b><span>Now Serving</span></div><div><b>{{ waiting_count }}</b><span>Waiting</span></div><div class="green"><b>{{ completed }}</b><span>Completed Today</span></div><div class="orange"><b>{{ cancelled }}</b><span>Cancelled / Skipped</span></div></div>
+<div class="panel"><h2>Queue Management</h2>{% if serving %}<div class="current-token"><small>Current Token</small><strong>{{ serving.token_number }}</strong><span>{{ serving.service }}</span></div>{% endif %}
+<h3>Current Queue</h3><div class="table-scroll"><table><thead><tr><th>Token</th><th>Name</th><th>Service</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for token in all_tokens %}<tr><td><b>{{ token.token_number }}</b></td><td>{{ token.full_name }}</td><td>{{ token.service }}</td><td>{{ token.get_status_display }}</td><td class="row-actions">
+{% if token.status == "WAITING" %}<form method="post" action="{% url 'token_action' token.id 'call' %}">{% csrf_token %}<button class="mini purple-btn">▶ Call</button></form>{% endif %}
+<form method="post" action="{% url 'token_action' token.id 'complete' %}">{% csrf_token %}<button class="mini green-btn">✓ Complete</button></form>
+<form method="post" action="{% url 'token_action' token.id 'skip' %}">{% csrf_token %}<button class="mini yellow-btn">» Skip</button></form>
+<form method="post" action="{% url 'token_action' token.id 'cancel' %}">{% csrf_token %}<button class="mini red-btn">× Cancel</button></form></td></tr>{% empty %}<tr><td colspan="5">No active tokens in the queue.</td></tr>{% endfor %}
+</tbody></table></div></div></section></main>{% endblock %}
